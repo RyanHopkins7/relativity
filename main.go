@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"relativity/newton"
+
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 )
@@ -22,5 +25,10 @@ func run() {
 }
 
 func main() {
+	body1InitialVelocity := *newton.NewVector2D(0.0, 0.0)
+	body1 := *newton.NewGravitationalBody(0.0, 0.0, 0.0, 0.0, body1InitialVelocity)
+
+	fmt.Print(body1)
+
 	pixelgl.Run(run)
 }
