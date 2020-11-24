@@ -1,6 +1,8 @@
 package newton
 
-import "math"
+import (
+	"math"
+)
 
 // Vector2D : a 2d vector containing magnitude and direction
 type Vector2D struct {
@@ -17,18 +19,21 @@ func NewVector2D(magnitude float64, direction float64) *Vector2D {
 	return v
 }
 
-// Add : add vec2 to vec1
-func (vec1 Vector2D) Add(vec2 Vector2D) {
-	vec1.magnitude += vec2.magnitude
-	vec1.direction += vec2.direction
-}
-
 // XComponent : get x component of vec1
-func (vec1 Vector2D) XComponent() float64 {
+func (vec1 *Vector2D) XComponent() float64 {
 	return vec1.magnitude * math.Cos(vec1.direction)
 }
 
-// yComponent : get y component of vec1
-func (vec1 Vector2D) yComponent() float64 {
+// YComponent : get y component of vec1
+func (vec1 *Vector2D) YComponent() float64 {
 	return vec1.magnitude * math.Sin(vec1.direction)
+}
+
+// Add : add vec2 to vec1
+func (vec1 *Vector2D) Add(vec2 Vector2D) {
+	newXComponent := vec1.XComponent() + vec2.XComponent()
+	newYComponent := vec1.YComponent() + vec2.YComponent()
+
+	vec1.magnitude = math.Sqrt(newXComponent*newXComponent + newYComponent*newYComponent)
+	vec1.direction = math.Atan(newYComponent / newXComponent)
 }

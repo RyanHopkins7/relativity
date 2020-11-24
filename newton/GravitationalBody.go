@@ -2,6 +2,7 @@
 package newton
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -16,7 +17,6 @@ type GravitationalBody struct {
 	yPosition    float64  // y position in m
 	velocity     Vector2D // velocity vector of form (speed, angle) where speed in m/s and angle in radians
 	acceleration Vector2D // acceleration vector of form (acceleration, angle) where acceleration in m/s2 and angle in radians
-	netForce     Vector2D // net force vector of form (force, angle) where force in N and angle in radians
 }
 
 // NewGravitationalBody : construct a GravitationalBody
@@ -32,26 +32,34 @@ func NewGravitationalBody(mass float64, radius float64, xPosition float64, yPosi
 }
 
 // Distance : calculate distance between two gravitational bodies
-func (body1 GravitationalBody) Distance(body2 GravitationalBody) float64 {
+func (body1 *GravitationalBody) Distance(body2 GravitationalBody) float64 {
 	return math.Sqrt(math.Pow(body2.xPosition-body1.xPosition, 2) + math.Pow(body2.yPosition-body1.yPosition, 2))
 }
 
 // Gravity : calculate gravitational force vector between two gravitational bodies
-func (body1 GravitationalBody) Gravity(body2 GravitationalBody) Vector2D {
+func (body1 *GravitationalBody) Gravity(body2 GravitationalBody) Vector2D {
 	r := body1.Distance(body2)
+	// TODO: fix potential divide by zero errors
+	// TODO: handle directionality only with angle rather than with force magnitude sign
 	force := G * (body1.mass * body2.mass) / math.Pow(r, 2)
-	angle := math.Asin(math.Abs(body2.xPosition-body1.xPosition) / r)
+	angle := math.Atan(math.Abs(body2.yPosition-body1.yPosition) / math.Abs(body2.xPosition-body1.xPosition))
 
 	return *NewVector2D(force, angle)
 }
 
 // Update : update xPosition, yPosition, velocity, and acceleration given netForce acting on body1
-func (body1 GravitationalBody) Update(netForce Vector2D) {
+func (body1 *GravitationalBody) Update(netForce Vector2D) {
 	body1.acceleration = *NewVector2D(netForce.magnitude/body1.mass, netForce.direction)
 
 	// dt is 1 frame
 	body1.velocity.Add(body1.acceleration)
 
+	fmt.Print("X position: ")
+	fmt.Print(body1.xPosition)
+	fmt.Print(" Y position: ")
+	fmt.Print(body1.yPosition)
+	fmt.Println()
+
 	body1.xPosition += body1.velocity.XComponent()
-	body1.yPosition += body1.velocity.yComponent()
+	body1.yPosition += body1.velocity.YComponent()
 }
