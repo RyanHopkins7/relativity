@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"relativity/newton"
 
 	"github.com/faiface/pixel"
@@ -18,11 +19,11 @@ func run() {
 		panic(err)
 	}
 
-	body1InitialVelocity := *newton.NewVector2D(0.0, 0.0)
-	body1 := *newton.NewGravitationalBody(1.0e12, 0.0, 100.0, 0.0, body1InitialVelocity)
+	body1InitialVelocity := *newton.NewVector2D(1.0, math.Pi/2)
+	body1 := *newton.NewGravitationalBody(100.0, 0.0, 1.0e5, -10.0, body1InitialVelocity)
 
 	body2InitialVelocity := *newton.NewVector2D(0.0, 0.0)
-	body2 := *newton.NewGravitationalBody(1.0e12, 0.0, -100.0, 0.0, body2InitialVelocity)
+	body2 := *newton.NewGravitationalBody(5.972e24, 0.0, 0.0, 0.0, body2InitialVelocity)
 
 	for !win.Closed() {
 		body1.Update(body1.Gravity(body2))

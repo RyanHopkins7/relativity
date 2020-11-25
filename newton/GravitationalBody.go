@@ -39,10 +39,17 @@ func (body1 *GravitationalBody) Distance(body2 GravitationalBody) float64 {
 // Gravity : calculate gravitational force vector between two gravitational bodies
 func (body1 *GravitationalBody) Gravity(body2 GravitationalBody) Vector2D {
 	r := body1.Distance(body2)
-	// TODO: fix potential divide by zero errors
-	// TODO: handle directionality only with angle rather than with force magnitude sign
 	force := G * (body1.mass * body2.mass) / math.Pow(r, 2)
-	angle := math.Atan(math.Abs(body2.yPosition-body1.yPosition) / math.Abs(body2.xPosition-body1.xPosition))
+	angle := math.Atan(math.Abs(body1.yPosition-body2.yPosition) / math.Abs(body1.xPosition-body2.xPosition))
+
+	// Reflect angle to appropriate quadrant
+	if body1.xPosition-body2.xPosition > 0 && body1.yPosition-body2.yPosition < 0 {
+		angle = math.Pi - angle
+	} else if body1.xPosition-body2.xPosition > 0 && body1.yPosition-body2.yPosition > 0 {
+		angle = math.Pi + angle
+	} else if body1.xPosition-body2.xPosition < 0 && body1.yPosition-body2.yPosition > 0 {
+		angle = math.Pi*2 - angle
+	}
 
 	return *NewVector2D(force, angle)
 }

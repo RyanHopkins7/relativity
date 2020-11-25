@@ -35,5 +35,14 @@ func (vec1 *Vector2D) Add(vec2 Vector2D) {
 	newYComponent := vec1.YComponent() + vec2.YComponent()
 
 	vec1.magnitude = math.Sqrt(newXComponent*newXComponent + newYComponent*newYComponent)
-	vec1.direction = math.Atan(newYComponent / newXComponent)
+	vec1.direction = math.Atan(math.Abs(newYComponent) / math.Abs(newXComponent))
+
+	// Reflect angle to appropriate quadrant
+	if newXComponent < 0 && newYComponent > 0 {
+		vec1.direction = math.Pi - vec1.direction
+	} else if newXComponent < 0 && newYComponent < 0 {
+		vec1.direction = math.Pi + vec1.direction
+	} else if newXComponent > 0 && newYComponent < 0 {
+		vec1.direction = math.Pi*2 - vec1.direction
+	}
 }
