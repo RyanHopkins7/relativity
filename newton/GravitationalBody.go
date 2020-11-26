@@ -2,7 +2,6 @@
 package newton
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -29,6 +28,21 @@ func NewGravitationalBody(mass float64, radius float64, xPosition float64, yPosi
 	body1.velocity = velocity
 
 	return body1
+}
+
+// GetXPosition : Get xPosition
+func (body1 *GravitationalBody) GetXPosition() float64 {
+	return body1.xPosition
+}
+
+// GetYPosition : Get yPosition
+func (body1 *GravitationalBody) GetYPosition() float64 {
+	return body1.yPosition
+}
+
+// GetRadius : Get radius
+func (body1 *GravitationalBody) GetRadius() float64 {
+	return body1.radius
 }
 
 // Distance : calculate distance between two gravitational bodies
@@ -60,12 +74,6 @@ func (body1 *GravitationalBody) Update(netForce Vector2D) {
 
 	// dt is 1 frame
 	body1.velocity.Add(body1.acceleration)
-
-	fmt.Print("X position: ")
-	fmt.Print(body1.xPosition)
-	fmt.Print(" Y position: ")
-	fmt.Print(body1.yPosition)
-	fmt.Println()
 
 	body1.xPosition += body1.velocity.XComponent()
 	body1.yPosition += body1.velocity.YComponent()
