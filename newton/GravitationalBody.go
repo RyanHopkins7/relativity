@@ -59,7 +59,7 @@ func (body1 *GravitationalBody) Gravity(body2 GravitationalBody) Vector2D {
 	// Reflect angle to appropriate quadrant
 	if body1.xPosition-body2.xPosition > 0 && body1.yPosition-body2.yPosition < 0 {
 		angle = math.Pi - angle
-	} else if body1.xPosition-body2.xPosition > 0 && body1.yPosition-body2.yPosition > 0 {
+	} else if body1.xPosition-body2.xPosition > 0 && body1.yPosition-body2.yPosition >= 0 {
 		angle = math.Pi + angle
 	} else if body1.xPosition-body2.xPosition < 0 && body1.yPosition-body2.yPosition > 0 {
 		angle = math.Pi*2 - angle

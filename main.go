@@ -24,11 +24,11 @@ func run() {
 	}
 
 	// Initialize gravitational bodies
-	body1InitialVelocity := *newton.NewVector2D(0.5, math.Pi)
-	body1 := *newton.NewGravitationalBody(1.0e12, 10.0, 50.0, 50.0, body1InitialVelocity)
+	body1InitialVelocity := *newton.NewVector2D(0.0, math.Pi)
+	body1 := *newton.NewGravitationalBody(1.0e12, 10.0, 100.0, 0.0, body1InitialVelocity)
 
-	body2InitialVelocity := *newton.NewVector2D(0.5, 0.0)
-	body2 := *newton.NewGravitationalBody(1.0e12, 10.0, -50.0, -50.0, body2InitialVelocity)
+	body2InitialVelocity := *newton.NewVector2D(0.0, 0.0)
+	body2 := *newton.NewGravitationalBody(1.0e12, 10.0, 0.0, 0.0, body2InitialVelocity)
 
 	// Initialize sprites
 	body1Sprite := imdraw.New(nil)

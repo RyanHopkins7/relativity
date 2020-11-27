@@ -40,7 +40,7 @@ func (vec1 *Vector2D) Add(vec2 Vector2D) {
 	// Reflect angle to appropriate quadrant
 	if newXComponent < 0 && newYComponent > 0 {
 		vec1.direction = math.Pi - vec1.direction
-	} else if newXComponent < 0 && newYComponent < 0 {
+	} else if newXComponent < 0 && newYComponent <= 0 {
 		vec1.direction = math.Pi + vec1.direction
 	} else if newXComponent > 0 && newYComponent < 0 {
 		vec1.direction = math.Pi*2 - vec1.direction
