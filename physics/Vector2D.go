@@ -1,4 +1,4 @@
-package newton
+package physics
 
 import (
 	"math"

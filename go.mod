@@ -1,4 +1,4 @@
-module relativity
+module gravity-simulation
 
 go 1.15
 
